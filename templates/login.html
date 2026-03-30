@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login — ContactoApp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0f0e0d;
+      --paper: #f5f2ec;
+      --accent: #c84b2f;
+      --muted: #7a7570;
+      --border: #dedad4;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: radial-gradient(circle at 20% 80%, #e8e0d5 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, #ede8df 0%, transparent 50%);
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 52px 48px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 8px 8px 0 var(--border);
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: -1px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .logo span { color: var(--accent); }
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      letter-spacing: 0.5px;
+    }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--ink);
+      background: var(--paper);
+      outline: none;
+      transition: border-color 0.15s;
+      margin-bottom: 20px;
+    }
+    input:focus { border-color: var(--accent); background: #fff; }
+    .btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--ink);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn:hover { background: var(--accent); transform: translateY(-1px); }
+    .error {
+      background: #fff0ed;
+      border-left: 3px solid var(--accent);
+      color: var(--accent);
+      font-size: 13px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      border-radius: 0 2px 2px 0;
+    }
+    .hint {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .hint code {
+      background: var(--paper);
+      padding: 1px 6px;
+      border-radius: 2px;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Contacto<span>App</span></div>
+    <div class="subtitle">Sistema de gestión de contactos</div>
+
+    {% if error %}
+    <div class="error" id="error-msg">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="/login">
+      <label for="username">Usuario</label>
+      <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" autocomplete="off">
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" placeholder="••••••••">
+
+      <button type="submit" class="btn" id="btn-login">Ingresar</button>
+    </form>
+
+    <p class="hint">Demo: usuario <code>admin</code> / contraseña <code>admin123</code></p>
+  </div>
+</body>
+</html>
