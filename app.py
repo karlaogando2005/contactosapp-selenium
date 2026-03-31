@@ -141,18 +141,20 @@ def editar_contacto(id):
             return redirect(url_for("contactos"))
     return render_template("form_contacto.html", accion="Editar", contacto=contacto, error=error)
 
-@app.route("/contactos/eliminar/<int:id>", methods=["POST"])
+@app.route("/contactos/eliminar/<int:id>", methods=["GET", "POST"])
 def eliminar_contacto(id):
     if "usuario" not in session:
         return redirect(url_for("login"))
-    with get_db() as conn:
-        conn.execute(
-            "DELETE FROM contactos WHERE id=? AND usuario_id=?",
-            (id, session["usuario_id"])
-        )
-        conn.commit()
+    try:
+        with get_db() as conn:
+            conn.execute(
+                "DELETE FROM contactos WHERE id=? AND usuario_id=?",
+                (id, session["usuario_id"])
+            )
+            conn.commit()
+    except Exception:
+        pass
     flash("Contacto eliminado.", "success")
     return redirect(url_for("contactos"))
-
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

@@ -73,8 +73,8 @@
 
       <form method="POST" id="form-contacto">
         <label for="nombre">Nombre <span class="required">*</span></label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ej: María García"
-               value="{{ contacto.nombre if contacto else '' }}" maxlength="100">
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: Maria Garcia"
+       value="{{ contacto.nombre if contacto else '' }}">
         <p class="hint-text">Máximo 100 caracteres</p>
 
         <label for="email">Email <span class="required">*</span></label>
