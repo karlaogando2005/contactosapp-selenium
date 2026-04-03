@@ -7,113 +7,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --ink: #0f0e0d;
-      --paper: #f5f2ec;
-      --accent: #c84b2f;
-      --muted: #7a7570;
-      --border: #dedad4;
-      --success: #2a7a4b;
-    }
+    :root { --ink: #0f0e0d; --paper: #f5f2ec; --accent: #c84b2f; --muted: #7a7570; --border: #dedad4; --success: #2a7a4b; }
     body { font-family: 'DM Sans', sans-serif; background: var(--paper); min-height: 100vh; }
-    nav {
-      background: var(--ink);
-      padding: 0 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-    }
-    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; color: #fff; font-size: 18px; letter-spacing: -0.5px; }
+    nav { background: var(--ink); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; color: #fff; font-size: 18px; }
     .nav-logo span { color: var(--accent); }
     .nav-right { display: flex; align-items: center; gap: 20px; }
     .nav-user { font-size: 13px; color: #aaa; }
     .nav-user strong { color: #fff; }
-    .nav-logout { font-size: 12px; color: #aaa; text-decoration: none; letter-spacing: 0.5px; transition: color 0.15s; }
+    .nav-logout { font-size: 12px; color: #aaa; text-decoration: none; transition: color 0.15s; }
     .nav-logout:hover { color: var(--accent); }
-
-    .container { max-width: 860px; margin: 0 auto; padding: 48px 24px; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 48px 24px; }
     .page-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; }
     .page-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 36px; letter-spacing: -1.5px; color: var(--ink); }
     .page-count { font-size: 13px; color: var(--muted); margin-top: 4px; }
-
-    .btn-new {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 20px;
-      background: var(--accent);
-      color: #fff;
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: opacity 0.15s, transform 0.1s;
-    }
-    .btn-new:hover { opacity: 0.88; transform: translateY(-1px); }
-
-    .flash {
-      background: #eaf7ef;
-      border-left: 3px solid var(--success);
-      color: var(--success);
-      font-size: 13px;
-      padding: 10px 14px;
-      margin-bottom: 24px;
-      border-radius: 0 2px 2px 0;
-    }
-
-    .table-wrap { background: #fff; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; box-shadow: 4px 4px 0 var(--border); }
-    table { width: 100%; border-collapse: collapse; }
+    .btn-new { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: var(--accent); color: #fff; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; text-decoration: none; border-radius: 2px; transition: opacity 0.15s; }
+    .btn-new:hover { opacity: 0.88; }
+    .flash { background: #eaf7ef; border-left: 3px solid var(--success); color: var(--success); font-size: 13px; padding: 10px 14px; margin-bottom: 24px; }
+    .table-wrap { background: #fff; border: 1px solid var(--border); border-radius: 2px; overflow-x: auto; box-shadow: 4px 4px 0 var(--border); }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
     thead { background: var(--ink); }
-    thead th {
-      text-align: left;
-      padding: 14px 20px;
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      color: #aaa;
-      text-transform: uppercase;
-    }
+    thead th { text-align: left; padding: 14px 20px; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; color: #aaa; text-transform: uppercase; }
     tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: var(--paper); }
     td { padding: 16px 20px; font-size: 14px; color: var(--ink); vertical-align: middle; }
     td.muted { color: var(--muted); }
     .actions { display: flex; gap: 10px; }
-    .btn-edit {
-      font-size: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      padding: 5px 12px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      font-weight: 500;
-      transition: border-color 0.15s, color 0.15s;
-    }
+    .btn-edit { font-size: 12px; color: var(--ink); text-decoration: none; padding: 5px 12px; border: 1px solid var(--border); border-radius: 2px; font-weight: 500; transition: border-color 0.15s; white-space: nowrap; }
     .btn-edit:hover { border-color: var(--ink); }
-    .btn-delete {
-      font-size: 12px;
-      color: var(--accent);
-      background: none;
-      border: 1px solid #f0cec8;
-      border-radius: 2px;
-      padding: 5px 12px;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      transition: border-color 0.15s;
-    }
+    .btn-delete { font-size: 12px; color: var(--accent); background: none; border: 1px solid #f0cec8; border-radius: 2px; padding: 5px 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: border-color 0.15s; white-space: nowrap; }
     .btn-delete:hover { border-color: var(--accent); }
-
-    .empty {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-      font-size: 15px;
-    }
+    .empty { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 15px; }
     .empty strong { display: block; font-family: 'Syne', sans-serif; font-size: 20px; color: var(--ink); margin-bottom: 8px; }
   </style>
 </head>
@@ -122,7 +47,7 @@
     <div class="nav-logo">Contacto<span>App</span></div>
     <div class="nav-right">
       <span class="nav-user">Hola, <strong>{{ usuario }}</strong></span>
-      <a href="/logout" class="nav-logout" id="btn-logout">Cerrar sesión</a>
+      <a href="/logout" class="nav-logout" id="btn-logout">Cerrar sesion</a>
     </div>
   </nav>
 
@@ -148,7 +73,7 @@
           <tr>
             <th>Nombre</th>
             <th>Email</th>
-            <th>Teléfono</th>
+            <th>Telefono</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -157,13 +82,13 @@
           <tr id="contacto-{{ c.id }}">
             <td><strong>{{ c.nombre }}</strong></td>
             <td class="muted">{{ c.email }}</td>
-            <td class="muted">{{ c.telefono or '—' }}</td>
+            <td class="muted">{{ c.telefono or '-' }}</td>
             <td>
               <div class="actions">
                 <a href="/contactos/editar/{{ c.id }}" class="btn-edit" id="btn-editar-{{ c.id }}">Editar</a>
                 <form method="POST" action="/contactos/eliminar/{{ c.id }}" style="display:inline;">
                   <button type="submit" class="btn-delete" id="btn-eliminar-{{ c.id }}"
-                    onclick="return confirm('¿Eliminar este contacto?')">Eliminar</button>
+                    onclick="return confirm('Eliminar este contacto?')">Eliminar</button>
                 </form>
               </div>
             </td>
@@ -173,8 +98,8 @@
       </table>
       {% else %}
       <div class="empty">
-        <strong>Sin contactos aún</strong>
-        Crea tu primer contacto usando el botón de arriba.
+        <strong>Sin contactos aun</strong>
+        Crea tu primer contacto usando el boton de arriba.
       </div>
       {% endif %}
     </div>

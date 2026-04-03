@@ -5,6 +5,7 @@ import pytest
 import os
 import threading
 import time
+import base64
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -24,15 +25,21 @@ os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 def flask_server():
     def run():
         app.run(port=5000, debug=False, use_reloader=False)
-
     t = threading.Thread(target=run, daemon=True)
     t.start()
     time.sleep(2)
     yield
 
 
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, f"rep_{rep.when}", rep)
+
+
 @pytest.fixture()
-def driver():
+def driver(request):
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
@@ -46,6 +53,20 @@ def driver():
     d = webdriver.Chrome(service=service, options=options)
     d.implicitly_wait(5)
     yield d
+
+    # Tomar screenshot al final de cada test y adjuntarlo al reporte
+    try:
+        screenshot_path = os.path.join(SCREENSHOT_DIR, f"{request.node.name}.png")
+        d.save_screenshot(screenshot_path)
+        with open(screenshot_path, "rb") as f:
+            img_b64 = base64.b64encode(f.read()).decode()
+        if hasattr(request.node, "extras"):
+            request.node.extras.append(
+                pytest.html.extras.image(img_b64)
+            )
+    except Exception:
+        pass
+
     d.quit()
 
 
